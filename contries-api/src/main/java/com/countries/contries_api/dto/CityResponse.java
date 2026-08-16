@@ -24,7 +24,7 @@ public record CityResponse(
         Long population,
 
         @Schema(description = "List of the official zip code registred in the city", example = "[9992, 9993, ...]")
-        List<String> zipCode,
+        List<String> zipCodes,
 
         @Schema(description = "A small description of the city with an limit of 500 caracteres", example = "Troisvierges" +
                 " (Ëlwen in Luxembourgish) is a " +
