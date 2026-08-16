@@ -1,15 +1,10 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:countriescitiesdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: ""
+  application:
+    name: contries-api
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
   jpa:
-    hibernate:
-      ddl-auto: create-drop
-  h2:
-    console:
-      enabled: true
+    show-sql: false
 
 server:
   port: 8081
