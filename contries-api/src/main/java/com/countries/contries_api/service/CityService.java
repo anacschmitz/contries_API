@@ -1,14 +1,19 @@
 package com.countries.contries_api.service;
 
 import com.countries.contries_api.dto.CityResponse;
+import com.countries.contries_api.dto.ErrorResponse;
 import com.countries.contries_api.dto.PageResponse;
 import com.countries.contries_api.entity.City;
+import com.countries.contries_api.entity.Country;
+import com.countries.contries_api.exception.GlobalExceptionHandler;
 import com.countries.contries_api.exception.ResourceNotFoundException;
 import com.countries.contries_api.repository.CityRepository;
 import com.countries.contries_api.repository.CountryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CityService {
 
     private CityRepository cityRepository;
@@ -24,9 +29,19 @@ public class CityService {
         if(!countryRepository.existsById(countryId)){
             throw new ResourceNotFoundException("Country with id " + countryId + " not found");
         }
-        Page<City> cities = CityRepository.findByCountryId(countryId, pageable);
-
+        Page<City> cities = cityRepository.findByCountryId(countryId, pageable);
         Page<CityResponse> responsePage = cities.map(this::toResponse);
+
+        return PageResponse.from(responsePage);
+    };
+
+    public PageResponse<CityResponse> getCitiesByCountryName(String countryName, Pageable pageable){
+        if(!cityRepository.existsByCountryName(countryName)){
+            throw new ResourceNotFoundException("Country with name " + countryName + " not found");
+        }
+        Page<City> cities = cityRepository.findByCountryName(countryName, pageable);
+        Page<CityResponse> responsePage = cities.map(this::toResponse);
+
         return PageResponse.from(responsePage);
     };
 
@@ -47,7 +62,7 @@ public class CityService {
                 city.getCountry().getName(),
                 city.getPopulation(),
                 city.getArea(),
-                city.getZipCodes(),
+                city.getZipCodeCentralOffice(),
                 city.getDescription()
         );
     }

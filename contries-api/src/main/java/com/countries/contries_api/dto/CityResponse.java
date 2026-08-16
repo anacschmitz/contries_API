@@ -2,7 +2,6 @@ package com.countries.contries_api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.List;
 @Schema(description = "Representation of the City")
 public record CityResponse(
         @Schema(description = "Unique identifier of the city")
@@ -24,7 +23,7 @@ public record CityResponse(
         Long population,
 
         @Schema(description = "List of the official zip code registred in the city", example = "[9992, 9993, ...]")
-        List<String> zipCodes,
+        String zipCodes,
 
         @Schema(description = "A small description of the city with an limit of 500 caracteres", example = "Troisvierges" +
                 " (Ëlwen in Luxembourgish) is a " +

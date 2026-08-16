@@ -12,9 +12,12 @@ public class Country {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "country")
-    private List<City> cities;
+    public Country(){};
+    public Country(String name) {
+        this.name = name;
+    }
 
+    @OneToMany(mappedBy = "country")
 
     public Long getId() {
         return id;
@@ -25,11 +28,7 @@ public class Country {
     }
 
     public void setName(String name) {
-        name = name;
-    }
-
-    public List<com.countries.contries_api.entity.City> getCity() {
-        return cities;
+        this.name = name;
     }
 
 
