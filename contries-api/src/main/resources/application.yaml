@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: contries-api
+
+server:
+  port: 8081
