@@ -35,15 +35,22 @@ public class CityService {
         return PageResponse.from(responsePage);
     };
 
-    public PageResponse<CityResponse> getCitiesByCountryName(String countryName, Pageable pageable){
-        if(!cityRepository.existsByCountryName(countryName)){
+    public PageResponse<CityResponse> getCitiesByCountryName(String countryName, Pageable pageable) {
+        if (countryName == null || countryName.isBlank()) {
+            throw new IllegalArgumentException("Country name must be defined");
+        }
+
+        String normalizedName = countryName.replace(" ", "").replace("-", "").replace("_", "").trim().toLowerCase();
+
+        if (!countryRepository.existsByNormalizedName(normalizedName)) {
             throw new ResourceNotFoundException("Country with name " + countryName + " not found");
         }
-        Page<City> cities = cityRepository.findByCountryName(countryName, pageable);
+
+        Page<City> cities = cityRepository.findByCountryNameNormalized(normalizedName, pageable);
         Page<CityResponse> responsePage = cities.map(this::toResponse);
 
         return PageResponse.from(responsePage);
-    };
+    }
 
     public CityResponse getCityById(Long cityId){
         if(!cityRepository.existsById(cityId)){

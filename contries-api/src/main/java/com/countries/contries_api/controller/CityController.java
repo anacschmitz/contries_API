@@ -30,7 +30,7 @@ public class CityController {
         }
 
         @GetMapping("/{countryId}")
-        @Operation(summary = "List of all cities", description = "Returns the list of the cities for an specific country" +
+        @Operation(summary = "List of all cities of a country", description = "Returns the list of the cities for an specific country" +
                 "by its Id value.")
         @ApiResponses({
                 @ApiResponse(responseCode = "200", description = "List of cities returned successfully")
